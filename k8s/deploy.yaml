@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: static-website
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: static-website
+  template:
+    metadata:
+      labels:
+        app: static-website
+    spec:
+      containers:
+        - name: static-website
+          image: anshj07/static_website:${IMAGE_TAG}
+          ports:
+            - containerPort: 80
