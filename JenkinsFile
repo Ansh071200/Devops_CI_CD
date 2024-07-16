@@ -47,20 +47,21 @@ pipeline {
             }
         }
 
-        stage('Update K8S Manifests & Push') {
-            steps {
-                script {
-                    withCredentials([usernamePassword(credentialsId: 'github-token', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-                        sh '''
-                        echo 'Updating K8S Manifests'
-                        sed -i "s/latest/${BUILD_NUMBER}/g" deploy.yaml
-                        git add deploy.yaml
-                        git commit -m 'Updated deploy.yaml | Jenkins Pipeline'
-                        git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/Ansh071200/Devops_CI_CD/k8s HEAD:main
-                        '''
-                    }
-                }
+           stage('Update K8S Manifests & Push') {
+    steps {
+        script {
+            withCredentials([string(credentialsId: 'github-token', variable: 'GIT_TOKEN')]) {
+                sh '''
+                echo 'Updating K8S Manifests'
+                sed -i "s/latest/${BUILD_NUMBER}/g" k8s/deploy.yaml
+                git add deploy.yaml
+                git commit -m 'Updated deploy.yaml | Jenkins Pipeline'
+                git config --global credential.helper store  # Optional: Configure Git to use credential store
+                git push https://github.com/Ansh071200/Devops_CI_CD/k8s HEAD:main
+                '''
             }
         }
+    }
+}
     }
 }
