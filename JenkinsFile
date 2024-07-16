@@ -55,9 +55,9 @@ pipeline {
                 echo 'Updating K8S Manifests'
                 sed -i "s/latest/${BUILD_NUMBER}/g" deploy.yaml
                 git add deploy.yaml
-                git commit -m 'Updated deploy.yaml | Jenkins Pipeline'
+                git commit -m "Updated deploy.yaml | Jenkins Pipeline"
                 git config --global credential.helper store  # Optional: Configure Git to use credential store
-                git push https://github.com/Ansh071200/Devops_CI_CD/k8s HEAD:main
+                git push https://github.com/Ansh071200/Devops_CI_CD HEAD:main
                 '''
             }
         }
