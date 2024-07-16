@@ -42,7 +42,7 @@ pipeline {
         stage('Checkout K8S Manifests') {
             steps {
                 git credentialsId: 'github-token', 
-                    url: 'https://github.com/Ansh071200/Devops_CI_CD/k8s',
+                    url: 'https://github.com/Ansh071200/Devops_CI_CD',
                     branch: 'main'
             }
         }
